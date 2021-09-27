@@ -295,7 +295,7 @@ namespace Anon;
                {
                   $bo=getMailPart($L,$x,$sn,$so,false);
                   $bo->numr=$sn; $bo->part=$so;
-                  if($so->type<1)
+                  if (($so->type<1) && is_array($sn))
                   {
                      if($sn[0]==='3'){continue;};
                      $bt=getMailPart($L,$x,$sn,$so,true)->data; $bt=trim($bt.'');
