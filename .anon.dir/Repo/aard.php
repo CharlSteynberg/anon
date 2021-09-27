@@ -170,7 +170,7 @@ namespace Anon;
 
       static function survey($dir,$brn=null,$whr=NATIVE,$all=null,$raw=null)
       {
-         if(!$brn||($raw===null)){$dir=repoOf($dir); if(!$dir){return;}; if(!$brn){$brn=isRepo($dir);}};
+         if(!$brn||($raw===null)){$dir=repoOf($dir); if(!$dir){return;}; if(!$brn){$brn=self::branch($dir);}};
          if(($whr!==NATIVE)&&($whr!==REMOTE)){fail('invalid arguments');}; $wht=(($whr===NATIVE)?' ':" origin/$brn ");
          $w=(($whr===NATIVE)?'N':'R');
 
