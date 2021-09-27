@@ -113,8 +113,8 @@ namespace Anon;
 
       static function status($dir,$opt=null)
       {
-         $brn = conf("Repo/gitRefer/SiteBranch");
-         $dir=repoOf($dir); if(!$dir){return;}; $src=self::origin($dir,1); $hst=HOSTNAME; $bdy=knob();
+         $dir=repoOf($dir);  $brn = self::branch($dir);
+         if(!$dir){return;}; $src=self::origin($dir,1); $hst=HOSTNAME; $bdy=knob();
          if(!$opt){$opt=[NATIVE=>$brn,REMOTE=>$brn];}; if(isAsso($opt)){$opt=knob($opt,U);};
 
          if($opt===':HASH:')
