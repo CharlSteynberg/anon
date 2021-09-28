@@ -29,13 +29,13 @@ $export=function($a,$u,$d)
       pset("$h/name",$u); pset("$h/pass","$HP"); pset("$h/mail",$m); pset("$h/clan",implode(',',$d->clan));
       pset("$h/face",'$/User/dcor/mug2.jpg'); pset("$h/rate",'0'); $v=['userName'=>$u]; $p="$h/home/Custom"; pset("$p/");
       pset("$p/client.js",import('$/User/tmpl/bootHack.js',$v)); pset("$p/pretty.css",import('$/User/tmpl/bootSkin.css',$v));
-      pset("$p/server.php",impose(pget('$/User/tmpl/bootHack.php'),'(~','~)',$v)); 
+      pset("$p/server.php",impose(pget('$/User/tmpl/bootHack.php'),'(~','~)',$v));
       pset("$h/home/Shared/");
       signal::dump("user created: $u");
 
       Repo::cloned(conf('Repo/gitRefer/UserOrigin'),"$h/home/MyRepo",conf('Repo/gitRefer/UserBranch'),$u);
       exec::{"git checkout -b user_$u"}("$h/home/MyRepo"); // create user branch
-      exec::{"git push -u origin user_$u:user_$u"}("$h/home/MyRepo");
+      exec::{"git push -u origin user_$u"}("$h/home/MyRepo"); // push user-branch to common repo
       Proc::signal('madeUser',['nick'=>$u,'mail'=>$m,'clan'=>$cl]);
 
       signal::busy(['with'=>"mail",'done'=>50]);
