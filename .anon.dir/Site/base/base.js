@@ -169,7 +169,12 @@
       e='invalid purl arguments'; if(!isKnob(o)){fail(e);return}; if(!isText(o.target,1)){fail(e);return}; // validate
       if(!isKnob(o.listen)){fail(e);return}; if(!isFunc(o.listen.loadend)){fail(e);return}; // validate
       if(!isFunc(o.listen.progress)){o.listen.progress=function(){}}; pe=o.listen.progress; delete o.listen.progress;
-      if(!isFunc(o.listen.error)){o.listen.error=function(ea){fail(ea)}}; ee=o.listen.error; delete o.listen.error;
+      if(!isFunc(o.listen.error)){o.listen.error=function(ea)
+      {
+          dump(ea);
+          fail(ea)
+      }};
+      ee=o.listen.error; delete o.listen.error;
 
       o.listen.progress=function(b)
       {
