@@ -42,7 +42,7 @@ namespace Anon;
 
       function engage($h,$u,$p,$b)
       {
-         return (new PDO("mysql:host={$h};dbname={$b}", $u, $p));
+         return (new \PDO("mysql:host={$h};dbname={$b}", $u, $p));
       }
 
 
