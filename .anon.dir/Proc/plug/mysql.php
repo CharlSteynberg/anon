@@ -14,7 +14,8 @@ namespace Anon;
 
       function __construct($x)
       {
-         todo::{'Data mysql_plug'}('change API to use `PDO` instead of `mysqli` in order to standardize and use prepared statements');
+         signal::dump("test 1");
+         // todo::{'Data mysql_plug'}('change API to use `PDO` instead of `mysqli` in order to standardize and use prepared statements');
          if(!$x->port){$x->port=3306;}; if(!$x->path){$x->path='/';}; $p=$x->path; $this->mean=$x;
          $p=frag(shaved($x->path,'/'),'/'); if(!$p){$p=[];}; $r=knob(); $x=['dbase','table','field'];
          $this->info=knob(['maxLevel'=>3,'levlType'=>$x]); if($this->mean->levl>$this->info->maxLevel){fail('path-depth unreachable');exit;};
