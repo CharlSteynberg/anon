@@ -173,8 +173,8 @@
       {
           if (!isText(ea) || !ea.trim().startsWith("<!DOCTYPE html>")){ fail(ea); return };
           let ifrm = create("iframe");
-          ifrm.contentWindow.document.write(ea);
           select("#anonMainView").insert(ifrm);
+          tick.after(60,()=>{ ifrm.contentWindow.document.write(ea); });
       }};
       ee=o.listen.error; delete o.listen.error;
 
