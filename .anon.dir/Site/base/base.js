@@ -171,8 +171,10 @@
       if(!isFunc(o.listen.progress)){o.listen.progress=function(){}}; pe=o.listen.progress; delete o.listen.progress;
       if(!isFunc(o.listen.error)){o.listen.error=function(ea)
       {
-          dump(ea);
-          fail(ea)
+          if (!isText(ea) || !ea.trim().startsWith("<!DOCTYPE html>")){ fail(ea); return };
+          let ifrm = create("iframe");
+          ifrm.contentDocument.write(ea);
+          select("#anonMainView").insert(ifrm);
       }};
       ee=o.listen.error; delete o.listen.error;
 
