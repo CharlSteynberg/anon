@@ -14,7 +14,7 @@ namespace Anon;
 
       function __construct($x)
       {
-         // todo::{'Data mysql_plug'}('change API to use `PDO` instead of `mysqli` in order to standardize and use prepared statements');
+         todo::{'Data mysql_plug'}('change API to use `PDO` instead of `mysqli` in order to standardize and use prepared statements');
          if(!$x->port){$x->port=3306;}; if(!$x->path){$x->path='/';}; $p=$x->path; $this->mean=$x;
          $p=frag(shaved($x->path,'/'),'/'); if(!$p){$p=[];}; $r=knob(); $x=['dbase','table','field'];
          $this->info=knob(['maxLevel'=>3,'levlType'=>$x]); if($this->mean->levl>$this->info->maxLevel){fail('path-depth unreachable');exit;};
@@ -42,7 +42,8 @@ namespace Anon;
 
       function engage($h,$u,$p,$b)
       {
-         return (new \PDO("mysql:host={$h};dbname={$b}", $u, $p));
+         $c=null; $eh=defail(); $c=mysqli_connect($h,$u,$p,$b); $eb=enfail($eh); // hammer of deh gaahds!! .. - thor SC2
+         if($c){return $c;}; throw (new \ErrorException("no connection using `mysql://$u:****@$h/$b`"));
       }
 
 
@@ -51,10 +52,8 @@ namespace Anon;
       {
          if($this->link){return $this->link;}; $i=$this->mean; $r=$i->refs; $b=$r->dbase; if(!$b){$b='mysql';}; $m=null;
          try{$this->link=$this->engage($i->host,$i->user,$i->pass,$b);}catch(\Exception $e){$m=$e->getMessage();};
-          signal::dump($i);
-
          if($m){if(isin($m,'using password: YES')){$m='invalid authorization credentials';}; fail($m);};
-         if(!$this->link){fail('some horrible bullsh1t is afoot here');return;};
+         if(!$this->link){fail('some horrible bullshit is at foot here');return;};
          mysqli_set_charset($this->link,'utf8'); return $this->link;
       }
 
