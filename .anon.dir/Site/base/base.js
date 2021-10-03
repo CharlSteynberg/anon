@@ -172,7 +172,7 @@
       if(!isFunc(o.listen.error)){o.listen.error=function(ea)
       {
           if (!isText(ea) || !ea.trim().startsWith("<!DOCTYPE html>")){ fail(ea); return };
-          let ifrm = create("iframe");
+          let ifrm = create({iframe:".layr"});
           select("#anonMainView").insert(ifrm);
           tick.after(60,()=>{ ifrm.contentWindow.document.write(ea); });
       }};
