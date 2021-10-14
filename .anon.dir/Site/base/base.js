@@ -941,6 +941,10 @@
 // --------------------------------------------------------------------------------------------------------------------------------------------
    const durl = function(d,f, p,n,o)
    {
+      if (isText(d) && isText(f))
+      {
+          return ("data:"+f+";base64,"+encode.b64(d));
+      };
       if(!!d&&(isDurl(d)||isDurl(d.data))){f(!!d.data?d.data:d);return};
       p=pathOf(d); if(!p){decode.BLOB(d,f); return};
       n=d.split('/').pop(); o=select(`img[src="${p}"]`);
