@@ -365,9 +365,8 @@ extend(custom.domtag)
 
             l=itm.info.levl; d=(!!itm.draggable); e=(!!itm.info.root.feedable); r=itm.info.repo; if(r){r=r.fork};
             f=itm.select('>'); //f.innerHTML='';
-dump(itm.info);
 
-            if((itm.info.root.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
+            if((itm.info.root.info.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
             {
                if(!isJson(r.body))
                {dump(r.body); fail("got non-json response, see console"); return};
