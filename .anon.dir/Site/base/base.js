@@ -1165,7 +1165,7 @@
 
 // func :: render : get remote asset and make it DOM-usable
 // --------------------------------------------------------------------------------------------------------------------------------------------
-   const render = function(p,f, s)
+   const render = function(p,f, s,x)
    {
       if(isKnob(p)||isList(p)||isNode(p))
       {
@@ -1173,12 +1173,19 @@
           select("#anonMainView").innerHTML="";
           select("#anonMainView").insert(n);
           if(!isFunc(f)){return n};
-          n.listen("ready",f);
+          n.listen("ready",f); return;
       };
       // if(MAIN.HALT){return};
-      if(!p){p='/'};
-      // expect({path:p,func:f});
-      s=this; purl(p,(r)=>
+      if(!p){p='/'};  s=this;  x=fext(p);
+
+      if (isin("js,mjs,jsm,css",x))
+      {
+          let r = select("#anonMainView");
+          // select("#anonMainView").innerHTML="";
+          requires(p,f); return;
+      };
+
+      s=this; purl((r)=>
       {
          let m,q,t,x; m=r.head.ContentType.split(';')[0].split('/x-').join('/');
          q=m.split('/'); t=trim(q[0]); x=trim(q[1]); if(!isin(keys(parser),t)){t=x};
