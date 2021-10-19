@@ -749,6 +749,7 @@ namespace Anon;
          return $r;
       }
 
+
       static function size($d,$o=null)
       {
          $p=isee($d);  if(!$p){$p=tval($d); fail("expecting `$p` to exist as readable path"); return;};
@@ -756,6 +757,16 @@ namespace Anon;
          $rp=ROOTPATH; $cp=COREPATH; $t=self::twig($p); $f=self::twig($p); $f=self::leaf($p);
          $r=exec::{"du -sb ./$f"}($t); $x=stub($r,[' ',"\t"]); if($x){$r=$x[0];}; $h=('/'.lshave("$t/$f",'/'));
          if(isNumr($r,1)){$r=($r*1); return round(($r/1024),3);}; fail("failed to get size of: `$h`");
+      }
+
+
+      static function span($p)
+      {
+          $r = pget($p);
+          if (!$r){ return; };
+          if (isText($r)){$r = explode("\n",$r);};
+          $r = count($r);
+          return $r;
       }
 
 
