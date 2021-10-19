@@ -366,9 +366,7 @@ extend(custom.domtag)
             l=itm.info.levl; d=(!!itm.draggable); e=(!!itm.info.root.feedable); r=itm.info.repo; if(r){r=r.fork};
             f=itm.select('>'); //f.innerHTML='';
 
-            var prnt = (itm.info.prnt || {type:"plug"});
-
-            if((prnt.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
+            if(!itm.info.root.fromPlug&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
             {
                if(!isJson(r.body))
                {dump(r.body); fail("got non-json response, see console"); return};
@@ -377,13 +375,14 @@ extend(custom.domtag)
                {
                   v.path=(itm.info.path+"/"+v.name);
                   v.root=itm.info.root;
-                  v.prnt=itm.info;
+                  v.prnt=prnt;
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
             });return};
 
             if(!isin('plug,dbase,table',itm.info.type)&&!isin('plug,dbase,table',prnt.type)){return;};
 
+            itm.info.root.fromPlug = true;
             Busy.edit('/User/plugMenu',0);
             purl('/User/plugMenu',{path:itm.info.path},(r)=>
             {
@@ -392,7 +391,7 @@ extend(custom.domtag)
                r=decode.jso(r.body,1); if(!r){return}; r.each((v)=>
                {
                   v.root=itm.info.root;
-                  v.prnt=itm.info;
+                  v.prnt=prnt;
                   v.path=(itm.info.path+"/"+v.name);
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
