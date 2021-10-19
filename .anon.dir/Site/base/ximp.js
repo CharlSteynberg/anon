@@ -70,9 +70,12 @@
 
       javascript:function(d,f)
       {
-         if(d&&d.body){d=d.body};
-         let obj = {script:"", type:(isin(d,["import ","export "]) ? "module" : "javascript")}; 
-         document.head.appendChild(create(obj));
+         if (d&&d.path)
+         {
+             requires(d.path,f);
+             return;
+         }
+         document.head.appendChild(create({script:d}));
          tick.after(100,f);
       },
    });
