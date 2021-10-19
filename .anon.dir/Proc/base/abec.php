@@ -761,8 +761,9 @@ namespace Anon;
 
       static function stem($p)
       {
-         if(!is_string($p)){return;}; $v=trim($p,'/'); if(!$v){return;}else{$v=explode('/',$v)[0];}; if(!is_funnic($v)){return;};
-         if(!is_dir(path("/$v"))){return;}; $i=self::indx("/$v"); if(!$i){return;}; if(fext("/$v/$i")==='php'){return $v;};
+         if(!is_string($p)){return;}; $r=trim($p,'/'); if(!$r){return;}else{$r=explode('/',$r)[0];};
+         if(!is_funnic($r) || !isee("/$v") || !is_dir(path("/$v"))){return;};
+         $i=self::indx("/$v"); if(!$i){return;}; if(fext("/$v/$i")==='php'){return $v;};
       }
 
 

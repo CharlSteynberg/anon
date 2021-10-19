@@ -747,7 +747,16 @@ namespace Anon;
       $x=path::info($d); if(!isKnob($x)){fail('expecting path, or URL');}; $o=$x->plug; $p=$x->path;
       if((($x->type==='git')&&($o==='http'))||(($o==='file')&&($x->type==='fold')&&isee("$p/.git"))){$o='git';}
       elseif($o==='https'){$o='http';}elseif($o==='imap'){$o='mail';}; $c="Anon\\{$o}_plug";
-      if(!is_class($c)){$p="/Proc/plug/$o.php"; requires::path($p); if(!is_class($c)){fail("expecting class `$c` in: `$p`");}};
+
+      if(!is_class($c)){ $p="/Proc/plug/$o.php"; requires::path($p); };
+      if(!is_class($c))
+      {
+          $s = path::stem(stak()[0]->file); // get plug from calling stem
+          $p = ($s ? "/$s/plug/$o.php" : "/plug/$o.php");
+          requires::path($p);
+      };
+
+      if(!is_class($c)){fail("expecting class `$c` in: `$p`");};
       // signal::dump("running plug: $d");
       $i=(new $c($x)); return $i;
    }
