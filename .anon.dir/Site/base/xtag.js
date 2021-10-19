@@ -375,12 +375,11 @@ extend(custom.domtag)
                {
                   v.path=(itm.info.path+"/"+v.name);
                   v.root=itm.info.root;
-                  v.prnt=prnt;
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
             });return};
 
-            if(!isin('plug,dbase,table',itm.info.type)){return;};
+            if(!isin('fold,plug,dbase,table',itm.info.type)){return;};
 
             itm.info.root.fromPlug = true;
             Busy.edit('/User/plugMenu',0);
