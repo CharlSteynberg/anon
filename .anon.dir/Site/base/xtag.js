@@ -380,7 +380,7 @@ extend(custom.domtag)
                });
             });return};
 
-            if(!isin('plug,dbase,table',itm.info.type)&&!isin('plug,dbase,table',prnt.type)){return;};
+            if(!isin('plug,dbase,table',itm.info.type)){return;};
 
             itm.info.root.fromPlug = true;
             Busy.edit('/User/plugMenu',0);
