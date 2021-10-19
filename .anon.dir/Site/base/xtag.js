@@ -366,7 +366,7 @@ extend(custom.domtag)
             l=itm.info.levl; d=(!!itm.draggable); e=(!!itm.info.root.feedable); r=itm.info.repo; if(r){r=r.fork};
             f=itm.select('>'); //f.innerHTML='';
 
-            if((itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
+            if((itm.info.root.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
             {
                if(!isJson(r.body))
                {dump(r.body); fail("got non-json response, see console"); return};
@@ -386,7 +386,8 @@ extend(custom.domtag)
                {dump(r.body); alert("got non-json response, see console"); Busy.edit('/User/plugMenu',100);return};
                r=decode.jso(r.body,1); if(!r){return}; r.each((v)=>
                {
-                  v.path=(itm.info.path+"/"+v.name); v.root=itm.info.root;
+                  v.root=itm.info.root;
+                  v.path=(itm.info.path+"/"+v.name);
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
                Busy.edit('/User/plugMenu',100);
@@ -418,9 +419,8 @@ extend(custom.domtag)
       };
 
 
-      n.sprout = function(into,levl,drgs,eats,fork)
+      n.sprout = function(into,levl,drgs,eats,fork,prnt)
       {
-
          if(isNode(into)||!isKnob(into)){return}; if(!into.type){into.type="file"}; if(!into.mime){into.mime="auto/undefined"};
          let slf = this; let pth=into.path; let lib=slf.status.mime; levl+=1; let ext = into.mime.split('/')[0];
          let val=into.name; let tpe=into.type; let kds=((tpe=='fold')?into.data:(isin(['plug','dbase','table'],tpe)?[]:VOID));
