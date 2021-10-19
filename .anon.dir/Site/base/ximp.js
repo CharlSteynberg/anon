@@ -71,7 +71,8 @@
       javascript:function(d,f)
       {
          if(d&&d.body){d=d.body};
-         document.head.appendChild(create({script:d}));
+         let obj = {script:"", type:(isin(d,["import ","export "]) ? "module" : "javascript")}; 
+         document.head.appendChild(create(obj));
          tick.after(100,f);
       },
    });
