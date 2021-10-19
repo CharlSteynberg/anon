@@ -365,16 +365,17 @@ extend(custom.domtag)
 
             l=itm.info.levl; d=(!!itm.draggable); e=(!!itm.info.root.feedable); r=itm.info.repo; if(r){r=r.fork};
             f=itm.select('>'); //f.innerHTML='';
-dump(itm.info.root.info);
 
-            if((itm.info.root.info.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
+            if((itm.info.prnt)&&(itm.info.prnt.info.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
             {
                if(!isJson(r.body))
                {dump(r.body); fail("got non-json response, see console"); return};
                r=decode.jso(r.body,1); if(r&&isList(r.data)){r=r.data}; if(!r){return};
                r.each((v)=>
                {
-                  v.path=(itm.info.path+"/"+v.name); v.root=itm.info.root;
+                  v.path=(itm.info.path+"/"+v.name);
+                  v.root=itm.info.root;
+                  v.prnt=itm;
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
             });return};
@@ -388,6 +389,7 @@ dump(itm.info.root.info);
                r=decode.jso(r.body,1); if(!r){return}; r.each((v)=>
                {
                   v.root=itm.info.root;
+                  v.prnt=itm;
                   v.path=(itm.info.path+"/"+v.name);
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
