@@ -382,7 +382,8 @@ extend(custom.domtag)
                });
             });return};
 
-            if(!isin('plug,dbase,table',itm.info.type)){return;};
+            if(!isin('plug,dbase,table',itm.info.type)&&!isin('plug,dbase,table',prnt.type)){return;};
+
             Busy.edit('/User/plugMenu',0);
             purl('/User/plugMenu',{path:itm.info.path},(r)=>
             {
