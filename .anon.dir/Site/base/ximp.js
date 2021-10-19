@@ -70,12 +70,10 @@
 
       javascript:function(d,f)
       {
-         if (d&&d.path)
-         {
-             requires(d.path,f);
-             return;
-         }
-         document.head.appendChild(create({script:d}));
-         tick.after(100,f);
+         if (d.body){d=d.body};
+         let n = {script:d};
+         n = create(n);
+         document.head.insert(n);
+         tick.after(150,f);
       },
    });

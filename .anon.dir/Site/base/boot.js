@@ -91,7 +91,7 @@
       if(fg)
       {
 
-          hr=fg[0]; fg=(fg[1]+fg[2]).slice(0,32); hr+=fg; dump(fg);
+          hr=fg[0]; fg=(fg[1]+fg[2]).slice(0,32); hr+=fg; console.log(fg);
           window.history.replaceState({id:"100"},fg,hr);
       };
 

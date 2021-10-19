@@ -677,7 +677,7 @@
 
          if((x=='js') || (x=='mjs'))
          {
-            let n=create({script:"", type:((x=="mjs"?"module":"javascript")), src:i}); n.purl=i;
+            let n=create({script:"", src:i}); n.purl=i;
             let rf=`Failed to load \`${i}\`\n-make sure it exists\n-make sure you belong to the right clans`;
             n.listen('error',function(){slf.done[this.purl]=1; bzy.done++; fail(rf);});
             n.listen('ready',function(){slf.done[this.purl]=1; bzy.done++; cbpi(this.purl);});
@@ -1183,6 +1183,7 @@
          let m,q,t,x; m=r.head.ContentType.split(';')[0].split('/x-').join('/');
          q=m.split('/'); t=trim(q[0]); x=trim(q[1]); if(!isin(keys(parser),t)){t=x};
          if(!trim(r.body)){if(!isFunc(f)){select("#anonMainView").innerHTML="";}else{f("")}; return};
+
          parsed(r,t,(z)=>
          {
             if(t=='markdown'){z=create({div:'.markdown-page',contents:[z]})};
