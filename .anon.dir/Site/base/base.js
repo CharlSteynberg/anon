@@ -1185,7 +1185,7 @@
           requires(p,f); return;
       };
 
-      s=this; purl((r)=>
+      s=this; purl(p,(r)=>
       {
          let m,q,t,x; m=r.head.ContentType.split(';')[0].split('/x-').join('/');
          q=m.split('/'); t=trim(q[0]); x=trim(q[1]); if(!isin(keys(parser),t)){t=x};
