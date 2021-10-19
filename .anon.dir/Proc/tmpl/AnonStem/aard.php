@@ -5,22 +5,22 @@ namespace Anon;
 
 # tool :: AnonStem : stem handler
 # ---------------------------------------------------------------------------------------------------------------------------------------------
-   class AnonStem
-   {
-      static $meta;
+    class AnonStem
+    {
+        static $meta;
 
 
 
-      static function __init()
-      {
+        static function __init()
+        {
 
-      }
+        }
 
 
 
-      static function __callStatic()
-      {
+        static function __callStatic()
+        {
 
-      }
-   }
+        }
+    }
 # ---------------------------------------------------------------------------------------------------------------------------------------------
