@@ -391,7 +391,6 @@ extend(custom.domtag)
                r=decode.jso(r.body,1); if(!r){return}; r.each((v)=>
                {
                   v.root=itm.info.root;
-                  v.prnt=prnt;
                   v.path=(itm.info.path+"/"+v.name);
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
