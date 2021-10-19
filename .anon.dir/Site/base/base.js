@@ -677,7 +677,7 @@
 
          if((x=='js') || (x=='mjs'))
          {
-            let n=create({script:"", type:((x=="mjs"?"module":"javascript")), src:i}); n.purl=i;
+            let n=create({script:"", src:i}); n.purl=i;
             let rf=`Failed to load \`${i}\`\n-make sure it exists\n-make sure you belong to the right clans`;
             n.listen('error',function(){slf.done[this.purl]=1; bzy.done++; fail(rf);});
             n.listen('ready',function(){slf.done[this.purl]=1; bzy.done++; cbpi(this.purl);});
