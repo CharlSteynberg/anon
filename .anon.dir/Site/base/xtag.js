@@ -366,9 +366,11 @@ extend(custom.domtag)
             l=itm.info.levl; d=(!!itm.draggable); e=(!!itm.info.root.feedable); r=itm.info.repo; if(r){r=r.fork};
             f=itm.select('>'); //f.innerHTML='';
 
+            var prnt = (itm.info.prnt || {info:{type:"plug"}});
+
 dump(itm.info);
 
-            if((itm.info.prnt)&&(itm.info.prnt.info.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
+            if((prnt.info.type=="fold")&&(itm.info.type=="fold")&&(f.childNodes.length<1)){purl('/User/foldMenu',{path:itm.info.path},(r)=>
             {
                if(!isJson(r.body))
                {dump(r.body); fail("got non-json response, see console"); return};
@@ -377,7 +379,7 @@ dump(itm.info);
                {
                   v.path=(itm.info.path+"/"+v.name);
                   v.root=itm.info.root;
-                  v.prnt=itm;
+                  v.prnt=itm.info;
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
             });return};
@@ -391,7 +393,7 @@ dump(itm.info);
                r=decode.jso(r.body,1); if(!r){return}; r.each((v)=>
                {
                   v.root=itm.info.root;
-                  v.prnt=itm;
+                  v.prnt=itm.info;
                   v.path=(itm.info.path+"/"+v.name);
                   f.insert(itm.info.root.sprout(v,l,d,e,r));
                });
