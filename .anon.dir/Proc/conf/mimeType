@@ -27,6 +27,7 @@ jsm : application/javascript
 jso : application/json
 json : application/json
 md : text/x-markdown
+mjs : application/javascript
 mkv : video/x-matroska
 mobi : application/x-mobipocket-ebook
 mp3 : audio/mpeg

@@ -675,12 +675,13 @@
          bzy.todo++; if(slf.done[i]){bzy.done++; cbpi(i);return}; // already loaded
          let t=VOID;
 
-         if(x=='js')
+         if((x=='js') || (x=='mjs'))
          {
-            let n=create('script'); n.purl=i;
+            let n=create('script'); n.purl=i;  let oo = {type:"javascript", src:i};  if (x=="mjs"){oo.type="module"};
             let rf=`Failed to load \`${i}\`\n-make sure it exists\n-make sure you belong to the right clans`;
             n.listen('error',function(){slf.done[this.purl]=1; bzy.done++; fail(rf);});
             n.listen('ready',function(){slf.done[this.purl]=1; bzy.done++; cbpi(this.purl);});
+
             n.modify({src:i}); document.head.insert(n); return;
          };
 
