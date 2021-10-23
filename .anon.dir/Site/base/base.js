@@ -678,11 +678,38 @@
          if((x=='js') || (x=='mjs'))
          {
             let n=create({script:"", src:i}); n.purl=i;
-            let rf=`Failed to load \`${i}\`\n-make sure it exists\n-make sure you belong to the right clans`;
-            n.listen('error',function(){slf.done[this.purl]=1; bzy.done++; fail(rf);});
             n.listen('ready',function(){slf.done[this.purl]=1; bzy.done++; cbpi(this.purl);});
+            n.listen('error',function(ev)
+            {
+                slf.done[this.purl]=1; bzy.done++;
+                ev = ev.detail;
+                if (ev.mesg !== "SyntaxError: Unexpected token '<'"){return}; MAIN.HALT = 0;
 
-            document.head.insert(n); return;
+                let itv = setInterval(()=>
+                {
+                    let m = (select("modal")||[])[0];
+                    if (m){ remove(m); clearInterval(itv); };
+                },1);
+
+                purl(ev.file,(refl)=>
+                {
+                    MAIN.HALT = 0;   refl = refl.body.trim();
+                    if (!isHtml(refl)){return};
+                    if (!refl.endsWith("</html>")){ refl = ("<html>"+refl+"</html>"); };
+                    let v = create({iframe:".layr"});
+                    v.listen("load",()=>
+                    {
+                        v.contentWindow.document.write(refl);
+                    });
+                    select("#anonMainView").innerHTML="";
+                    select("#anonMainView").insert(v);
+                    v.contentDocument.body.parentNode.addEventListener("click",tapper);
+                });
+                MAIN.HALT = 1;
+            });
+
+            document.head.insert(n);
+            return;
          };
 
          if(x=='css')

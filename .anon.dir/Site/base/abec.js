@@ -92,7 +92,7 @@
    {
        if(!isText(v)){return false}; v=v.trim(); if(!v){return false};
        // if(!(v.startsWith("<")&&v.endsWith(">"))){return false};
-       let t="<a |<i |<b |<p |<span |<div |<pre |<code |<button |<style |<table ".split("|");
+       let t="<html|<head|<body|<a |<i|<b|<p|<span|<div|<pre|<code|<button|<style|<table|<br|<meta|<link".split("|");
        if(!isin(v,t)||!isin(v,">")){return false}; return true;
    };
 

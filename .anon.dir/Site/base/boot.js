@@ -143,7 +143,10 @@
             Busy.done(); MAIN.HALT++; if(MAIN.HALT>2){return};
 
             let info=e.detail; if((info.name=="Error")&&(info.mesg=="null")){return};
+            let elem=(select(`script[src="${info.file}"]`)||[])[0];
+            if (!!elem){elem.signal("error",info)};
             console.error(info);
+
             let hint=`An error was triggered and for some reason it was not handled.`;
 
             let apnd=`This could be trivial, but may cause issues with your session.
