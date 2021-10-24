@@ -953,7 +953,8 @@
 // --------------------------------------------------------------------------------------------------------------------------------------------
    const newGui = function(p,v, t,b,a)
    {
-      server.stream.close(); MAIN.CONFIRMLEAVE=0; if(isKnob(p)){v=p; p=VOID};
+      if(!!server && !!server.stream){server.stream.close()}; 
+      MAIN.CONFIRMLEAVE=0; if(isKnob(p)){v=p; p=VOID};
       if(isPath(p)){t=(location.protocol+'//'+location.host+p)}else{t=location.href};
       a=rstub(t,"#"); if(a){t=a[0]; a=("#"+a[2])}else{a=""}; t=((!isin(t,"?")?"?":"&")+"freshGui="+fash()+a);
       b=[{input:'#INTRFACE', type:'hidden', value:'GUI'}]; cookie.delete("RECEIVER");
