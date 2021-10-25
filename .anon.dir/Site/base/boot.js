@@ -87,12 +87,11 @@
    {
       // Cookies.set(sesn('HASH'),'...');
 
-      let hr=location.href; let fg=stub(hr,["?freshGui=","&freshGui="]);
+      let hr,fg;  hr=location.href;  fg=stub(hr,["?freshGui=","&freshGui="]);
       if(fg)
       {
-
-          hr=fg[0]; fg=(fg[1]+fg[2]).slice(0,32); hr+=fg; console.log(fg);
-          window.history.replaceState({id:"100"},fg,hr);
+          hr = (fg[0] + fg[2].slice(32));
+          window.history.replaceState(null,"",hr);
       };
 
       wait.until(()=>{return (!!MAIN.Busy)},()=>
