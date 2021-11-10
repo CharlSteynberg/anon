@@ -112,10 +112,10 @@ namespace Anon;
       function update($a)
       {
          $L=$this->vivify(); $I=$this->mean; $P=$I->path;
-signal::dump(isText($a));
-         if($I->type==='file')
+
+         if(isText($a))
          {
-            expect::text($a); $L->write(path::leaf($P),$a); if($L->fail){fail($L->fail);};
+            $L->write(path::leaf($P),$a); if($L->fail){fail($L->fail);};
             return true;
          };
       }
