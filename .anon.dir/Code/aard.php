@@ -41,7 +41,7 @@ namespace Anon;
             ekko(OK);
          };
 
-         lock::create($p); try{$r=crud($x)->update($b); signal::dump($x);}catch(\Exception $e){$r=null;}; lock::remove($p);
+         lock::create($p); try{$r=crud($x)->update($b);}catch(\Exception $e){$r=null;}; lock::remove($p);
          if($r){Proc::signal('pathUpdate',['path'=>$p],'.work');};
          ekko(($r?OK:FAIL));
       }
