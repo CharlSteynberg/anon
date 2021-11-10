@@ -115,7 +115,7 @@ namespace Anon;
 
          if(isText($a))
          {
-            $L->write(path::leaf($P),$a); if($L->fail){fail($L->fail);};
+            $L->write($P,$a); if($L->fail){fail($L->fail);};
             return true;
          };
       }
