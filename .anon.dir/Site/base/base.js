@@ -2217,4 +2217,11 @@
    document.addEventListener("mousedown", function(e){if(isin(e.signal,'LeftClick')){cursor.grab=1;};},false);
    document.addEventListener("mouseup", function(e){cursor.grab=0; imHere(1); },false);
    document.addEventListener("click", tapper,false);
+   document.addEventListener("keypress", function keyListener(ev)
+   {
+       if (ev.keyCode !== 13){ return };
+       let tgt = select("modal");      if (!tgt||!tgt[0]){ return };  tgt = tgt[0];
+       tgt = tgt.select("butn.cool");  if (!tgt||!tgt[0]){ return };  tgt = tgt[0];
+       tgt.signal("click");
+   },false);
 // --------------------------------------------------------------------------------------------------------------------------------------------
