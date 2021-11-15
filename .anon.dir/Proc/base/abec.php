@@ -886,7 +886,9 @@ namespace Anon;
 
       static function call($p,$o=null,$a=null)
       {
-         $p=crop($p); $s=self::stem($p); if(is_class($s)) // if existing class that was already loaded
+         $p=crop($p); $s=self::stem($p);
+
+         if(is_class($s)) // if existing class that was already loaded
          {
             $y=stub($p,"/$s/")[2]; if(!$y){return;}; $a=explode('/',$y); $f=lpop($a); if(!is_method("$s::$f")){return;}; // fail
             $r=call("$s::$f",$a); return (($r===null)?true:$r); // call controller .. good
@@ -904,8 +906,9 @@ namespace Anon;
          $r=import($x);
 
          if(is_closure($r)){return call($r,$a);}; if(!isset($a[0])){return $r;}; // load controller
-         $f=lpop($a); if(is_class($r)&&is_method("$r::$f")){return call("$r::$f",$a);}; // call controller method
-         if(is_object($r)&&is_closure($r->$f)){return call($r->$f,$a);}; $o[]=$x; $r=self::call($p,$o,$a); // call closure
+         $f=lpop($a);
+         if(is_class($r) && is_funnic($f)){return call("$r::$f",$a);}; // call static controller method
+         if(is_object($r)&&is_funnic($f)){return call($r->$f,$a);}; $o[]=$x; $r=self::call($p,$o,$a); // call closure
          return (($r===null)?true:$r);
       }
 
