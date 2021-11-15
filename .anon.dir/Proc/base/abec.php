@@ -886,6 +886,10 @@ namespace Anon;
 
       static function call($p,$o=null,$a=null)
       {
+if($p==="/Gumtree/select")
+{
+    ekko("gotcha");
+};
          $p=crop($p); $s=self::stem($p);
 
          if(is_class($s)) // if existing class that was already loaded
