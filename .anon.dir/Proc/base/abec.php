@@ -351,9 +351,23 @@ namespace Anon;
 // --------------------------------------------------------------------------------------------------------------------------------------------
    function bore($o,$p,$v=null)
    {
-      if(isAsso($o)){$o=knob($o);}; $k=shaved($p,"/"); // prep
+      $k=shaved($p,"/"); // prep
+      $l=explode("/",$k);
+
+      if(is_class($o))
+      {
+          $t=lpop($l); if (!isin($o,$t) && isin($o,"meta"))
+          {
+              try{ $o=$o->meta; }catch(\Exception $e)
+              {
+                  try{ $o=$o::$meta; }catch(\Exception $f){ return; } // undefined
+              };
+          };
+      };
+
+      if(isAsso($o)){$o=knob($o);};
       if(!isKnob($o,1)||!isText($k,1)){return $o;}; // invalid/undefined
-      $l=explode("/",$k); $r=dupe($o);
+      $r=dupe($o);
 
       if($v===null) // get
       {
@@ -451,7 +465,7 @@ namespace Anon;
 
         static function init()
         {
-            self::$meta=knob();
+            self::$meta=knob(["CLIENT"=>concat($_GET,$_POST)]);
         }
 
         static function get($d)
@@ -874,45 +888,45 @@ namespace Anon;
       }
 
 
-      static function ctrl($p,$o=null)
+      static function ctrl($t,$o=null)
       {
-         if(!path($p)){return;}; if(($o!==null)&&!path($o)){return;}; $p=crop($p); if(is_string($o)){$o=[$o];}; if(!is_array($o)){$o=[];};
-         $o=crop($o); $l=trim($p,'/'); if(!$l){$i=path::indx($p); if(!$i){return;}; $x=fext($i); return (($x==='php')?"/$i":null);};
-         $l=explode('/',$l); $r=null; $b='';
-         do{$b.=("/".lpop($l)); if(!is_dir(path($b))){$b=self::twig($b);}; $i=path::indx($b); if($i&&(fext("$b/$i")==='php')){$r="$b/$i";};
-         if($r&&!in_array($r,$o)){break;}else{$r=null;}}while(count($l)); return $r;
+         if(!path($t)){return;}; $p=crop($t);
+         if(is_string($o)){$o=[$o];}; if(!is_array($o)){$o=[];}; $o=crop($o);
+         $l=shaved($p,"/"); $l=explode("/",$l); $r=null; $b="";
+         do
+         {
+             $b .= ("/".lpop($l));  $p="$b"; // path buffer
+             if (in_array($p,$o)){ continue; }
+             elseif (isFold($p)){ $i=path::indx($p); if($i && (fext("$p/$i")==="php")){$r="$p/$i"; break;}}
+             elseif (isFile($p) && (fext($p)==="php")){ $r=$p; break;}
+             elseif (!count($l) && !isee($p)){ if(isee("$p.php")){ $r="$p.php"; break;}; }; // end of the line
+         }
+         while(count($l));
+
+         return ($r ? knob(["path"=>$r, "args"=>$l]) : null);
       }
 
 
-      static function call($p,$o=null,$a=null)
+      static function call($t,$o=null,$a=null)
       {
-if($p==="/Gumtree/select")
-{
-    ekko("gotcha");
-};
-         $p=crop($p); $s=self::stem($p);
+         $p = crop($t);
+         $x = self::ctrl($p,$o);  if(!$x){return;};
+         $q = $x->path;  if(isin("/Site/aard.php /Proc/aard.php",$q)){ return; };
+         $r = vars($q);
 
-         if(is_class($s)) // if existing class that was already loaded
+         if ($a === null){$a=[];};
+         if ($r === null)
          {
-            $y=stub($p,"/$s/")[2]; if(!$y){return;}; $a=explode('/',$y); $f=lpop($a); if(!is_method("$s::$f")){return;}; // fail
-            $r=call("$s::$f",$a); return (($r===null)?true:$r); // call controller .. good
+             $r = import($q,vars("CLIENT"));  vars([$q=>($r?$r:true)]);
+             if (count($a) < count($x->args)){ $a=$x->args; $p=implode("/",$a); };
          };
 
-         $x=self::ctrl($p,$o); if(!$x){return;}; if(is_string($o)){$o=[$o];}; if(!is_array($o)){$o=[];}; $o=crop($o); // get controller path
-         if(!is_array($a))
-         {
-            $y=rshave(stub($x,['aard.php','index.php','auto.php'])[0],'/'); $a=trim(str_replace($y,'',$p),'/'); // filter arguments
-            $a=((strlen($a)<1)?[]:explode('/',$a)); // make arguments array
-         };
+         if (isFunc($r)){ return call($r,$a); };
+         if ((count($a)<1) || (!is_class($r)&&!isKnob($r)&&!is_array($r)))
+         { return (($r===null)?true:$r); };
 
-         if(strpos($x,'//')===0){$x=crop($x);};
-         if(($x==='/index.php')&&(envi('RECEIVER')==='nona')){return;};
-         $r=import($x);
-
-         if(is_closure($r)){return call($r,$a);}; if(!isset($a[0])){return $r;}; // load controller
-         $f=lpop($a);
-         if(is_class($r) && is_funnic($f)){return call("$r::$f",$a);}; // call static controller method
-         if(is_object($r)&&is_funnic($f)){return call($r->$f,$a);}; $o[]=$x; $r=self::call($p,$o,$a); // call closure
+         $r = bore($r, $p);
+         if (isFunc($r)){ return call($r,$a); };
          return (($r===null)?true:$r);
       }
 
