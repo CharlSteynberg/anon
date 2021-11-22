@@ -23,7 +23,7 @@ namespace Anon;
         if($ps&&($np==="/$ps/panl.js")){$fc=knob("$/$ps/pack.inf")->forClans;
         if($fc&&($fc!=='*')&&!userDoes($fc)&&!userDoes('sudo')){finish(403);exit;}};
         if(isFold($np)){$ix=path::indx($np,'aard.php'); if($ix){$np=(rshave($np,'/')."/$ix");}}; // get index-file
-        if(($ps||(envi('RECEIVER')==='nona'))&&facing("DPR")&&isee($np)){finish($np);}; // file request .. handle quick
+        if(($ps||(isin("anon nona",envi('RECEIVER'))))&&facing("DPR")&&isee($np)){finish($np);}; // file request .. handle quick
         $tn=conf("Site/autoConf")->template; if(!isWord($tn)||!isee("$/Site/tmpl/$tn")){$tn="Anon";};
         $uc=sesn("CLAN"); $tp="$/Site/tmpl/$tn"; $tc=knob("$tp/conf"); $cv=$tc->clanView; $rc=null; $rp=null;
         $rp=test::{$np}($tc->redirect); if(is_int($rp)){finish($rp); exit;}elseif(isPath($rp)){$np=$rp;}; // graceful exit

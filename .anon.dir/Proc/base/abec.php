@@ -909,24 +909,23 @@ namespace Anon;
 
       static function call($t,$o=null,$a=null)
       {
-         $p = crop($t);
-         $x = self::ctrl($p,$o);  if(!$x){return;};
-         $q = $x->path;  if(isin("/Site/aard.php /Proc/aard.php",$q)){ return; };
+         $p = crop($t);  $x = self::ctrl($p,$o);  if(!$x || isee($p)){return;};
+         $q = $x->path; if(isin("/Site/aard.php /Proc/aard.php",$q)){ return; };
+         $s = shaved(self::twig($q),'/');  $s = explode('/',$s);  $s = rpop($s);
          $r = vars($q);
 
          if ($a === null){$a=[];};
          if ($r === null)
          {
-             $r = import($q,vars("CLIENT"));  vars([$q=>($r?$r:true)]);
-             if (count($a) < count($x->args)){ $a=$x->args; $p=implode("/",$a); };
+             $r = import($q,vars("CLIENT"));
+             if(is_class($s)){$r = $s;}; vars([$q=>($r?$r:true)]);
+             if (count($a) < count($x->args)){ $a=$x->args; };
          };
 
+         if (isKnob($r)){ $r = bore($r, implode("/",$a)); };
          if (isFunc($r)){ return call($r,$a); };
-         if ((count($a)<1) || (!is_class($r)&&!isKnob($r)&&!is_array($r)))
-         { return (($r===null)?true:$r); };
+         if (is_class($r)){ $f = lpop($a);  return call("$r::$f",$a); };
 
-         $r = bore($r, $p);
-         if (isFunc($r)){ return call($r,$a); };
          return (($r===null)?true:$r);
       }
 
