@@ -1073,11 +1073,47 @@
 // --------------------------------------------------------------------------------------------------------------------------------------------
    extend(MAIN)
    ({
-      time:function()
+      time:function(s)
       {
          let r=Math.round((Date.now()/1000));
-         return r;
-      },
+         if (!isText(s)){ return r };
+
+         s = s.trim().toLowerCase().split("  ").join(" ");
+
+         if (s.startsWith("a ")){ s = ("1 "+a.slice(2)) };
+         if (s.endsWith(" ago")){ s = ("-"+s.slice(0,-4)); };
+         if (s.endsWith("s")){ s = s.slice(0,-1); };
+
+         let p = s.split(" ");
+         let n = (p[0] * 1);
+         let u = p[1];
+
+         if (!this[u]){ fail("undefined unit: "+u); return };
+         return (r + (this[u] * n));
+      }
+      .bind
+      ({
+          moment: 1,
+
+          sc: 1,
+          sec: 1,
+          second: 1,
+
+          mn: 60,
+          min: 60,
+          minute: 60,
+
+          hr:   3600,
+          hor:   3600,
+          hour:   3600,
+
+          day:    86400,
+          week:   604800,
+          month:  2592000,
+          year:   31536000,
+      }),
+
+
       round:function(n,d, r)
       {
          if(!isNumr(n)){return}; if(isInum(n)){return n}; if(!d||!isInum(d)){return Math.round(n)}; r=n.toFixed(d); r=rtrim(rtrim(r,'0'),'.');

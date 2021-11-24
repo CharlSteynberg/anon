@@ -206,8 +206,10 @@ namespace Anon;
       {
          if(!$t)
          {
+            $xr = $this->mean->refs;
             if(isAssa($x)){$x=knob($x,U);}; if(!isKnob($x)){fail("expecting :assa: or :knob: but given: ".tval($x));};
-            if(!isWord($x->using)){fail('expecting `using` as :word:');}; $t=$x->using; if(!$this->link){$this->vivify();};
+            if(!$x->using && ($xr->basis=="table")){$x->using = $xr->table;};
+            if(!isWord($x->using)){signal::dump($this->mean->refs); wait(500); fail('expecting `using` as :word:');}; $t=$x->using; if(!$this->link){$this->vivify();};
             $d=$this->descry($t); if(!$d){fail("table `$t` is undefined");}; $l=keys($d->cols); $this->{":$t:"}=$l; $w=$x->write;
             $z=knob(['done'=>0,'last'=>0]); if(span($w)<1){return $z;};
             if(isNuma($w)&&!isNuma($w[0])&&!isAssa($w[0])&&!isKnob($w[0])){$w=[$w];};
