@@ -132,7 +132,23 @@
 // --------------------------------------------------------------------------------------------------------------------------------------------
    const lowerCase = function(v){if(!isText(v,1)){return v}; return v.toLowerCase()};
    const upperCase = function(v){if(!isText(v,1)){return v}; return v.toUpperCase()};
-   const proprCase = function(v){if(!isText(v,1)){return v}; return (v[0].toUpperCase()+(v[1]?v.substring(1).toLowerCase():''))};
+
+   // const proprCase = function(v){if(!isText(v,1)){return v}; return (v[0].toUpperCase()+(v[1]?v.substring(1).toLowerCase():''))};
+   const proprCase = function(v)
+   {
+       if(!isText(v,1)){return v};
+       v=v.split(' ').join('-'); let r=[];
+       v.split('-').forEach((i)=>
+       {
+           let x = r.length;
+           let c = i.slice(0,1).toUpperCase();
+           let z = i.slice(1).toLowerCase();
+           r[x] = (c+""+z);
+       });
+
+       return r.join(" ");
+   };
+
    const camelCase = function(v)
    {if(!isText(v,1)){return v}; v=v.split(' ').join('-'); let r='';v.split('-').forEach((i)=>{r+=proprCase(i)}); return r;};
 
