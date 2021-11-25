@@ -126,9 +126,10 @@ namespace Anon;
                $m=$f->getMessage();
                if(isin($m,'Unable to prepare statement: 5, database is locked'))
                {$p=$this->mean->path; $m="database `$p` is locked";};
-               fail::database("$m\n\nQUERY:\n$q"); exit;
+               enfail($eh,1); fail::database("$m\n\nQUERY:\n$q"); exit;
             };
             $et=enfail($eh,1);
+
             if($et)
             {
                 if(!$rt&&isin($et,"not been correctly initialised"))
@@ -209,11 +210,13 @@ namespace Anon;
             $xr = $this->mean->refs;
             if(isAssa($x)){$x=knob($x,U);}; if(!isKnob($x)){fail("expecting :assa: or :knob: but given: ".tval($x));};
             if(!$x->using && ($xr->basis=="table")){$x->using = $xr->table;};
-            if(!isWord($x->using)){signal::dump($this->mean->refs); wait(500); fail('expecting `using` as :word:');}; $t=$x->using; if(!$this->link){$this->vivify();};
-            $d=$this->descry($t); if(!$d){fail("table `$t` is undefined");}; $l=keys($d->cols); $this->{":$t:"}=$l; $w=$x->write;
-            $z=knob(['done'=>0,'last'=>0]); if(span($w)<1){return $z;};
+            if(!isWord($x->using)){fail('expecting `using` as :word:');}; $t=$x->using; if(!$this->link){$this->vivify();};
+            $z=knob(['deed'=>'INSERT','done'=>0,'last'=>0]); $w=$x->write; if(span($w)<1){return $z;};
             if(isNuma($w)&&!isNuma($w[0])&&!isAssa($w[0])&&!isKnob($w[0])){$w=[$w];};
-            if(!isNuma($w)){$w=[$w];}; $z=knob(['deed'=>'INSERT','done'=>0,'last'=>0]); $this->mean->tabl=$t;
+            if(!isNuma($w)){$w=[$w];}; $this->mean->tabl=$t;
+            if(isNuma($w) && isKnob($w[0])){ $l=keys($w[0]); }
+            else{ $d=$this->descry($t); if(!$d){fail("table `$t` is undefined");}; $l=keys($d->cols); };
+            $this->{":$t:"}=$l;
             foreach($w as $i){$r=$this->insert($i,$t); $z->done++; $z->last=$r->last;};
             $this->pacify(); return $z;
          }
@@ -225,7 +228,54 @@ namespace Anon;
 
          $ref=[]; $k=keys($x); $v=vals($x); $c=fuse($k,', '); $sql="INSERT INTO $t ($c) VALUES"; foreach($v as $vk => $vv)
          {$n=($k[$vk]); if(!isText($vv)&&!isNumr($vv)){$vv=tval($vv);}; $vr=":{$n}_write"; $ref[$vr]=$vv; $v[$vk]=$vr;};
-         $v=fuse($v,', '); $sql.=" ($v)"; $r=$this->adjure($sql,$ref); if($r){return $r;}; return knob(['done'=>0,'last'=>0]);
+         $v=fuse($v,', '); $sql.=" ($v)";
+         $r=$this->adjure($sql,$ref); if($r){return $r;}; return knob(['done'=>0,'last'=>0]);
+      }
+
+
+      function inzert($qry)
+      {
+         $ref = $this->mean->refs;
+         $tbl = null;
+         $col = null;
+         $rsl = knob(["deed"=>"INSERT","done"=>0,"last"=>0]);
+
+         if (isAssa($qry) && isin(keys($qry,[using,write]))){ $qry = knob($qry,U); }
+         elseif (isNuma($qry)){ $qry = knob(["write"=>$qry]); };
+         expect::knob($qry);
+         if (!$qry->using){ $qry->using = $ref->table; };
+         $tbl = $qry->using;
+
+         if (!isNuma($qry->write,1)){ return $rsl; }; // nothing to write
+         if (isKnob($qry->write[0])||isAssa($qry->write[0])){ $col=keys($qry->write[0]); }
+         else { $dsc=$this->descry($tbl); if(!$dsc){fail("table `$tbl` is undefined");}; $col=keys($dsc->cols); };
+
+         $fld = fuse($col,", ");
+         $sql = "INSERT INTO $tbl ($fld) VALUES ";
+         $ref = [];
+         $lnk = $this->vivify();
+
+         foreach($qry->write as $row)
+         {
+             $row = vals($row);  foreach($row as $idx => $val)
+             {
+                 if(!isText($val)&&!isNumr($val))
+                 { $val=tval($val); };
+
+                 $key = (":".$col[$idx]."_write");
+                 $ref[$key] = $val;
+                 $row[$idx] = $key;
+             };
+
+             $row = fuse($row,", ");
+             $adj = $this->adjure("$sql ($row)",$ref,$lnk);
+
+             if ($adj)
+             { $rsl->done++;  $rsl->last=$adj->last; };
+         };
+
+         $this->pacify();
+         return $rsl;
       }
 
 

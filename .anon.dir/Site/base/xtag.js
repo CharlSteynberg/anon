@@ -63,7 +63,11 @@ extend(custom.domtag)
             let uni=lst[`.icon-${ico}::before`]; uni=(isWord(ico)?uni.content:((isUpperCase(ico)&&(span(ico)<3))?ico:'?'));
             let tiu=lst[`.icon-${cpi}::before`]; tiu=(isWord(cpi)?tiu.content:((isUpperCase(cpi)&&(span(cpi)<3))?cpi:'?'));
             let stl=`fill="${tnt}" stroke="none" style="webkit-font-smoothing:greyscale"`; let tfs=(nmr/2);
-            if(isText(cpi,1)){tfs*=0.8; tip.y*=1.2;};
+            if(isText(cpi,1))
+            {
+                tfs*=0.8;
+                // tip.y*=1.2;
+            };
             let tic=
             {
                 Tl:{cx:0,cy:(tfs-2)},
@@ -389,6 +393,7 @@ extend(custom.domtag)
                {dump(r.body); alert("got non-json response, see console"); Busy.edit('/User/plugMenu',100);return};
                r=decode.jso(r.body,1); if(!r){return}; r.each((v)=>
                {
+                  if(!v){return};
                   v.root=itm.info.root;
                   v.path=(itm.info.path+"/"+v.name);
                   f.insert(itm.info.root.sprout(v,l,d,e,r));

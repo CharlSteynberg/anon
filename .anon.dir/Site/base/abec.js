@@ -1080,7 +1080,7 @@
 
          s = s.trim().toLowerCase().split("  ").join(" ");
 
-         if (s.startsWith("a ")){ s = ("1 "+a.slice(2)) };
+         if (s.startsWith("a ")){ s = ("1 "+s.slice(2)) };
          if (s.endsWith(" ago")){ s = ("-"+s.slice(0,-4)); };
          if (s.endsWith("s")){ s = s.slice(0,-1); };
 
