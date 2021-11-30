@@ -44,10 +44,11 @@ namespace Anon;
       function adjure($a)
       {
           $L=$this->vivify(); $I=$this->mean; if(isAsso($a)){$a=knob($a);};
+          $cnf = conf("Proc/autoConf");
 
           $co=knob
           ([
-              'TIMEOUT' => 60,
+              'TIMEOUT' => $cnf->httpTime,
               'HEADER' => true,
               'RETURNTRANSFER' => true,
               'SSL_VERIFYPEER' => false,

@@ -93,7 +93,7 @@ namespace Anon;
          {
              $r=$this->engage($cz,$u,$p,$o); $f=$r->fail;
              if($r->link){$this->link=$r->link; return $this->link;};
-             wait(250);
+             return knob(["fail"=>503]);
          };
 
          foreach($ca as $cs)
