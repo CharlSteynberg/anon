@@ -989,7 +989,6 @@ namespace Anon;
         $disk = crop($path);
 
         if (is_class("signal")){ signal::dump("server dnload bgn: `$purl`"); wait(60); };
-        signal::dump("server dnload bgn: `$purl`"); wait(60);
 
         $link = curl_init($purl);
         $sock = fopen($path,'wb');
