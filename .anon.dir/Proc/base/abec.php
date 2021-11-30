@@ -1034,7 +1034,7 @@ namespace Anon;
          };
 
          if($q===null){return array_merge($d,$f);}; $d=filter($d,$q); $f=filter($f,$q);
-         $d=sort($d); $f=sort($f); // separately sort dir -and file-names alpha-numerically before merge
+         sort($d); sort($f); // separately sort dir -and file-names alpha-numerically before merge
          $r=array_merge($d,$f); if(count($r)<1){return $r;};
          if($q->limit){$r=filter::limit($r,$q->limit);};
          if($shp){$r=filter::shape($r,$shp);};
