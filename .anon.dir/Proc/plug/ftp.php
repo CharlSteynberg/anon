@@ -79,7 +79,7 @@ namespace Anon;
 
          if($I->type==='fold')
          {
-            $A=0; $R=[]; $dl=[]; $fl=[]; $D=$L->mlsd('.');
+            $A=0; $T=[]; $R=[]; $dl=[]; $fl=[]; $D=$L->mlsd('.');
             if(!$D||$L->fail){$L->fail=null; $D=$L->nlist('.'); if($L->fail){fail($L->fail);return;}; $A=1;};
 
             if($A){fail("FTP_plug .. dir listing via nlist succeeded mlsd .. this needs filtering");};
@@ -93,9 +93,21 @@ namespace Anon;
                ([
                   'repo'=>$n,'path'=>$p,'name'=>$i['name'],'mime'=>$m,'type'=>$t,'size'=>$s,'time'=>$q,'mode'=>$x,'levl'=>$z,'data'=>$n
                ]);
-               if($t=='fold'){$o->data=[]; $dl[]=$o;}else{$fl[]=$o;};
+               if($t=='fold'){$o->data=[]; $dl[]=$i['name'];}else{$fl[]=$i['name'];};
+               $T[]=$o;
             };
-            foreach($dl as $di){$R[]=$di;}; foreach($fl as $fi){$R[]=$fi;};
+
+            sort($dl);  sort($fl);  $Q = array_merge($dl,$fl);
+            foreach($Q as $Qi)
+            {
+                $fnd = null;
+                foreach($T as $Ti)
+                {
+                    if ($fnd){ break; };
+                    if ($Ti->name !== $Qi){ continue; };
+                    $R[]=$Ti; $fnd=true;
+                };
+            };
          }
          else
          {
