@@ -102,7 +102,7 @@
          init:function(id,ea,dj, os,ns, ob,op, nb,np)
          {
             select('#anonPanlView').declan('hide');  //select('#anonPanlView').enclan('show');
-            os=this.vars.active; ns=id.slice(0,4); dump(id.slice(0,-8)); // references
+            os=this.vars.active; ns=id.slice(0,-8);  // references
             this.vars.active=ns;
 
             ob=select(('#'+os+'MenuKnob')); if(ob){ob.declan('AnonActvKnob')}; // de-focus old-button
