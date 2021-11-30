@@ -108,7 +108,7 @@
          if(!isin(['#','.'],c)){c=VOID}; if(c){x=x.substring(1)}; this.forEach((i)=>
          {
             let n=(isNode(i)?i.nodeName.toLowerCase():(isKnob(i)?keys(i)[0]:VOID)); if(!n){return};
-            if(!c){if(x==n){r.push(n)};return}; if((c=='#')&&(x==n)){r.push(n);return}; if((c=='.')&&isin(i.className(x))){r.push(n);return};
+            if(!c){if(x==n){r.push(n)};return}; if((c=='#')&&(x==n)){r.push(n);return}; if((c=='.')&&isin(i.className,x)){r.push(n);return};
          });
          return r;
       },

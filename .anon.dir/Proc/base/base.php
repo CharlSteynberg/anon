@@ -977,3 +977,30 @@ namespace Anon;
         };
     }
 # ---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+# func :: dnload : download remote file
+# ---------------------------------------------------------------------------------------------------------------------------------------------
+    function dnload($purl,$path)
+    {
+        $fold = path::twig($path);  if (!isee($fold)){path::make("$fold/");};
+        $path = path($path);
+        $disk = crop($path);
+
+        if (is_class("signal")){ signal::dump("server dnload bgn: `$purl`"); wait(60); };
+        signal::dump("server dnload bgn: `$purl`"); wait(60);
+
+        $link = curl_init($purl);
+        $sock = fopen($path,'wb');
+
+        curl_setopt($link, CURLOPT_FILE, $sock);
+        curl_setopt($link, CURLOPT_HEADER, 0);
+        curl_exec($link); curl_close($link);
+        fclose($sock);
+
+        if (is_class("signal")){ signal::dump("server dnload end: `$disk`"); wait(60); };
+
+        return OK;
+    }
+# ---------------------------------------------------------------------------------------------------------------------------------------------
