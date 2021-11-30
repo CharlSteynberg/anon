@@ -93,7 +93,8 @@ namespace Anon;
                ([
                   'repo'=>$n,'path'=>$p,'name'=>$i['name'],'mime'=>$m,'type'=>$t,'size'=>$s,'time'=>$q,'mode'=>$x,'levl'=>$z,'data'=>$n
                ]);
-               if($t=='fold'){$o->data=[]; $dl[]=$i['name'];}else{$fl[]=$i['name'];};
+               $lcn = lowerCase($i['name']);
+               if($t=='fold'){$o->data=[]; $dl[]=$lcn;}else{$fl[]=$lcn;};
                $T[]=$o;
             };
 
@@ -104,7 +105,7 @@ namespace Anon;
                 foreach($T as $Ti)
                 {
                     if ($fnd){ break; };
-                    if ($Ti->name !== $Qi){ continue; };
+                    if (lowerCase($Ti->name) !== $Qi){ continue; };
                     $R[]=$Ti; $fnd=true;
                 };
             };
