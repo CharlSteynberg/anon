@@ -110,6 +110,7 @@ namespace Anon;
       static function view($o)
       {
          if(runlevel(1)){siteLocked(false);}
+         if(!is_object($o)){$o=knob($o);}; if(!is_array($o->stak)){$o->stak=[];};
          $n=self::$meta->active; $f=self::$meta->listen->$n;
          if((count($o->stak)<1)&&is_nokey_array(dbug::$temp)&&isset(dbug::$temp[0])&&is_object(dbug::$temp[0]))
          {$o->stak=dupe(dbug::$temp); dbug::$temp=null;}; $r=$f($o);
