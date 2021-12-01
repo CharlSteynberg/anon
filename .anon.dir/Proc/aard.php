@@ -27,6 +27,7 @@ namespace Anon;
          self::$meta->hook = knob();
          self::$meta->wait = $_SERVER['SYSCLOCK']->server;
          self::$meta->keep = $_SERVER['SYSCLOCK']->upkeep;
+         self::$meta->bufr = conf("Proc/autoConf")->evntBufr;
 
          spl_autoload_register(function($n)
          {$n=str_replace('Anon\\','',$n); import($n);}); // auto-load class-assoc PHP file
@@ -162,7 +163,7 @@ namespace Anon;
          permit::fubu(); // security
          if(!is_string($e)||!$e){$e='undefined';}; if(!is_string($d)){$d=tval($d);};
          $k=sesn('HASH'); $d=base64_encode($d); $b=": \nevent: $e\ndata: $d\n\n";
-         while(strlen($b)<8400){$b.=' ';}; // padd event with whitespace .. if too short then the connection will restart
+         while(strlen($b) < self::$meta->bufr){$b.=' ';}; // padd event with whitespace .. if too short then the connection will restart
          if(facing('SSE')&&!headers_sent())
          {
              header_remove(); header("Content-Type: text/event-stream\n\n");

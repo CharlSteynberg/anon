@@ -1,3 +1,4 @@
 viewDirs: false
 eventSpy: false
 httpTime: 50
+evntBufr: 8400

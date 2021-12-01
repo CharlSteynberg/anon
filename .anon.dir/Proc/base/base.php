@@ -988,7 +988,7 @@ namespace Anon;
         $path = path($path);
         $disk = crop($path);
 
-        if (is_class("signal")){ signal::dump("server dnload bgn: `$purl`"); wait(60); };
+        if (is_class("signal")){ signal::dump("server :: dnload : bgn $purl"); };
 
         $link = curl_init($purl);
         $sock = fopen($path,'wb');
@@ -998,7 +998,7 @@ namespace Anon;
         curl_exec($link); curl_close($link);
         fclose($sock);
 
-        if (is_class("signal")){ signal::dump("server dnload end: `$disk`"); wait(60); };
+        if (is_class("signal")){ signal::dump("server :: dnload : end $disk"); };
 
         return OK;
     }
