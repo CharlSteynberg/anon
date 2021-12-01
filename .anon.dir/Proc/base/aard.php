@@ -535,7 +535,12 @@ namespace Anon;
          $b[]=json_decode(json_encode(['func'=>$f,'file'=>crop($p),'line'=>$l])); $y=null;
       };
       if(($n===null)&&($x===null)){return $b;}; $y=0;
-      foreach($b as $i => $o){if(($i===$x)||($o->func===$n)){$y=1; continue;}; if($y){$r[]=$o;};}; if(count($r)>0){return $r;}; return $b;
+      foreach($b as $i => $o)
+      {
+          // if(($i===$x)||($o->func===$n)||($o->path===$n)||(($o->func." ".$o->path)===$n)){$y=1; continue;}; if($y){$r[]=$o;};
+          if(($i===$x)||($o->func===$n)||($o->path===$n)||(($o->func." ".$o->path)===$n)){$y=1;}; if($y){$r[]=$o;};
+      };
+      if(count($r)>0){return $r;}; return $b;
    }
 # ---------------------------------------------------------------------------------------------------------------------------------------------
 
