@@ -70,6 +70,11 @@
    color:hsla(0,0%,35%,1) !important;
 }
 
+.ace_gutter-cell
+{
+    min-width:55px;
+}
+
 .ace_gutter-cell.ace_error
 {
    background:hsla(0,100%,70%,0.05) !important;
