@@ -64,9 +64,14 @@ namespace Anon;
           if(isKnob($a->param)){foreach($a->param as $hk => $hv){$ho->$hk=$hv;}}; unset($hk,$hv);
           $ha=[]; foreach($ho as $hk => $hv){$ha[]="$hk: $hv";}; curl_setopt($L,CURLOPT_HTTPHEADER,$ha);
 
-
           $r=curl_exec($L); $e=null; if(!$r){$x=curl_error($L); if($x){$e=$x;}};
-          if($e){$this->pacify(); fail::http($e);return;};
+
+          if($e)
+          {
+              $this->pacify();
+              return knob(["fail"=>$e]);
+          };
+
           $i=curl_getinfo($L); $this->pacify(); $d="\r\n\r\n"; $s=stub($r,$d);
           if($s&&isin($s[0],'100 Continue')){$s=stub($s[2],$d);};
           $b=$s[2]; $l=frag(trim($s[0]),"\n"); $h=knob(); $pf=$co->POSTFIELDS;
