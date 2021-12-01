@@ -238,6 +238,7 @@ namespace Anon;
       {
          Proc::signal('busy',['with'=>"mail",'done'=>21]); if(isAssa($a)){$a=knob($a,U);}; expect::knob($a);
          if(!$a->using){$a->using='INBOX';}; $L=$this->vivify($a->using,($a->touch?null:OP_READONLY));
+         if(is_object($L) && ($L->fail == 503)){ return []; };
          $fltr=$a->fetch; if(!$fltr){$fltr='*';}; if(!isText($fltr)&&!isFlat($fltr)){fail::mailPlug('invalid `fetch` clause');};
          $cols=$this->cols; if($fltr==='*'){$fltr=$cols;}elseif(isText($fltr)){$fltr=[$fltr];}; $a->fetch=$fltr;
          if($a->where)
