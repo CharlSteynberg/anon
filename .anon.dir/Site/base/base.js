@@ -50,10 +50,21 @@
    ({
       cookie:
       {
-         config:{path:Cookies.defaults.path,domain:Cookies.defaults.domain},
+         config:{expires:null, path:Cookies.defaults.path, domain:Cookies.defaults.domain, secure:true, sameSite:"Strict"},
          exists:function(b,v){v=Cookies.get(b); return isVoid(v);},
-         create:function(b,a,c,d){Cookies.set(b,btoa(JSON.stringify(a)),{expires:c||null,path:d||this.config.path,domain:this.config.domain}); return true;},
-         update:function(b,a,c,d){Cookies.set(b,a,{expires:c||null,path:d||this.config.path,domain:this.config.domain}); return true;},
+
+         create:function(b,a,c,d)
+         {
+             let o = copyOf(this.config);
+             Cookies.set(b,btoa(JSON.stringify(a)),o); return true;
+         },
+
+         update:function(b,a,c,d)
+         {
+             let o = copyOf(this.config);
+             Cookies.set(b,a,o); return true;
+         },
+
          delete:function(b,a){return Cookies.remove(b,{path:a||this.config.path,domain:this.config.domain})},
          select:function(b, r,v,t)
          {
