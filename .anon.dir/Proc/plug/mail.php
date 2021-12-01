@@ -66,7 +66,9 @@ namespace Anon;
       {
 // Proc::signal("dump","step 2 .. engaged .. making a call to plea: DO NOT SPILL OB"); wait(999);
          $r=knob(); $t=$this->adjure("imap_open",[$h,$u,$p,$o,$y,$z]); if(!isin($t,'Resource id #')){$r->fail=$t; return $r;}; // test/fail
-         $r->link=imap_open($h,$u,$p,$o,$y,$z); $me=imap_errors(); $ma=imap_alerts();
+         $fh = defail();
+            $r->link=imap_open($h,$u,$p,$o,$y,$z); $me=imap_errors(); $ma=imap_alerts();
+         $fm = enfail($fh,1);
          if($r->link){return $r;}; $f=[imap_last_error()]; if($me){$f=array_merge($f,$me);}; if($ma){$f=array_merge($f,$ma);};
          if(isset($eb[0])){$f[]=$eb[0]->mesg;}; $f=trim(implode("\n",$f)); if(!$f){$f=trim($ob);}; $r->fail=$f; wait(250);
          return $r;
