@@ -70,14 +70,10 @@
    color:hsla(0,0%,35%,1) !important;
 }
 
-.ace_folding-enabled
-{
-    min-width:100px;
-}
 
 .ace_gutter-cell
 {
-    min-width:60px;
+    /* min-width:60px; */
 }
 
 .ace_gutter-cell.ace_error
