@@ -142,7 +142,7 @@ namespace Anon;
       function descry($a=null)
       {
          $L=$this->vivify($a,(($a===null)?OP_HALFOPEN:null));
-         if (is_object($L) && ($L->fail == 503)){ return; };
+         if (is_object($L) && ($L->fail == 503)){ return $L; };
 
          if($a===null)
          {

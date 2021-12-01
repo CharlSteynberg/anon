@@ -45,6 +45,7 @@ namespace Anon;
          if(!$p){$v=knob($_POST); $p=pget("/Mail/vars/link/$v->purl.url");}; $i=path::info($p); $u="$i->user@$i->host"; $h="/Mail/data/$u";
          Proc::signal('busy',['with'=>"mail",'done'=>10]);
          $l=crud($p)->descry(); Proc::signal('busy',['with'=>"mail",'done'=>100]); $r=[];
+         if (is_object($l) && ($l->fail == 503)){ return $r; };
          if(!isee("$h/")){path::make("$h/");}; foreach($l as $i){$b=self::mboxName($i); if(!isee("$h/$b")){path::make("$h/$b/");}; $r[]=$b;};
          return $r;
       }
