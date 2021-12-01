@@ -70,14 +70,14 @@
    color:hsla(0,0%,35%,1) !important;
 }
 
-.ace_layer.ace_gutter-layer.ace_folding-enabled
+.ace_folding-enabled
 {
-    min-width:60px;
+    min-width:100px;
 }
 
 .ace_gutter-cell
 {
-    min-width:55px;
+    min-width:60px;
 }
 
 .ace_gutter-cell.ace_error
