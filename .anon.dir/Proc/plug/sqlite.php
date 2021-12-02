@@ -233,52 +233,6 @@ namespace Anon;
       }
 
 
-      function inzert($qry)
-      {
-         $ref = $this->mean->refs;
-         $tbl = null;
-         $col = null;
-         $rsl = knob(["deed"=>"INSERT","done"=>0,"last"=>0]);
-
-         if (isAssa($qry) && isin(keys($qry,[using,write]))){ $qry = knob($qry,U); }
-         elseif (isNuma($qry)){ $qry = knob(["write"=>$qry]); };
-         expect::knob($qry);
-         if (!$qry->using){ $qry->using = $ref->table; };
-         $tbl = $qry->using;
-
-         if (!isNuma($qry->write,1)){ return $rsl; }; // nothing to write
-         if (isKnob($qry->write[0])||isAssa($qry->write[0])){ $col=keys($qry->write[0]); }
-         else { $dsc=$this->descry($tbl); if(!$dsc){fail("table `$tbl` is undefined");}; $col=keys($dsc->cols); };
-
-         $fld = fuse($col,", ");
-         $sql = "INSERT INTO $tbl ($fld) VALUES ";
-         $ref = [];
-         $lnk = $this->vivify();
-
-         foreach($qry->write as $row)
-         {
-             $row = vals($row);  foreach($row as $idx => $val)
-             {
-                 if(!isText($val)&&!isNumr($val))
-                 { $val=tval($val); };
-
-                 $key = (":".$col[$idx]."_write");
-                 $ref[$key] = $val;
-                 $row[$idx] = $key;
-             };
-
-             $row = fuse($row,", ");
-             $adj = $this->adjure("$sql ($row)",$ref,$lnk);
-
-             if ($adj)
-             { $rsl->done++;  $rsl->last=$adj->last; };
-         };
-
-         $this->pacify();
-         return $rsl;
-      }
-
-
 
       function select($x='*',$tre=null)
       {
@@ -432,7 +386,9 @@ namespace Anon;
       {
 
          $q=(isAssa($x)?knob($x,U):$x); $x=null; $alt=[]; $ref=[];
+         $xr = $this->mean->refs;
          if(!isKnob($q)){fail('expecting :assa: or :knob:');}; $sql='UPDATE '; $opr=padded((explode(' ',EXPROPER)),' ');
+         if(!$q->using && ($xr->basis=="table")){$q->using = $xr->table;};
          if(!$q->using){fail('expecting `using` as table reference');}; if(!isNuma($q->using)){$q->using=[$q->using];};
          if($q->where&&is_string($q->where)){$q->where=[$q->where];};
          if(!isAssa($q->write)&&!isKnob($q->write)){fail('expecting `write` as :assa: or :knob:');};
