@@ -52,6 +52,8 @@ namespace Anon;
          ]);
          // dump("sent:\n",[$fn,$al],"\n\nreceived:\n",$r,"\n\n");
 
+         if (!is_object($r) || !is_object($r->info)){return $r;};
+
          $i=$r->info; if(($i->http_code===419)&&($rt<=36))
          {wait(2000); $r=$this->adjure($fn,$al, $rt); return $r;};
 
