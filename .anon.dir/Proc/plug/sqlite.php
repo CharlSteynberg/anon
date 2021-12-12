@@ -424,6 +424,8 @@ namespace Anon;
             $this->pacify(); return $r;
          };
          $sql='DELETE FROM '; $opr=padded((explode(' ',EXPROPER)),' ');
+         $xr = $this->mean->refs;
+         if(!$q->using && ($xr->basis=="table")){$q->using = $xr->table;};
          if(!$q->using){fail('expecting `using` as table reference');}; if(!isNuma($q->using)){$q->using=[$q->using];};
          if($q->where&&is_string($q->where)){$q->where=[$q->where];};
 
